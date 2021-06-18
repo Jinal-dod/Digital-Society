@@ -1,0 +1,35 @@
+class Product(models.Model):
+	category=(
+				('Pet_supply','Pet_supply'),
+				('Pet_food','Pet_food')
+			)
+	seller=models.ForeignKey(User,on_delete=models.CASCADE)
+	product_category=models.CharField(max_length=100,choices=category)
+	product_model=models.CharField(max_length=100)
+	product_price=models.IntegerField(max_length=10)
+	product_image=models.ImageField(upload_to="product_image")
+
+	def __str__(self):
+		return self.seller.Firstname+" - "+self.product_model
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		style="background-color:rgb(110, 62, 45);

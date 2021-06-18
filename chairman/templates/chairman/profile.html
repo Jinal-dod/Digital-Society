@@ -1,0 +1,246 @@
+﻿{% extends 'chairman/header.html' %}
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="csrf-token" content="iL8hUXsdXy71MbOZjq4fWUv4KGPZnJ7k17P7RClL">
+        <link rel="icon" href="https://thememakker.com/templates/oreo/hospital/laravel/public/favicon.ico" type="image/x-icon"> <!-- Favicon-->
+        <title>Profile - Oero Laravel</title>
+        <meta name="description" content="Oero Laravel">
+        <meta name="author" content="Oero Laravel">
+                
+                
+        <link rel="stylesheet" href="{% static 'chairman\assets\plugins\bootstrap\css\bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'chairman\assets\css\timeline.css' %}">
+                <!-- Custom Css -->
+        <link rel="stylesheet" href="{% static 'chairman\assets\css\main.css' %}">
+        <link rel="stylesheet" href="{% static 'chairman\assets\css\color_skins.css' %}">
+            </head>
+        <body class="theme-cyan">
+            {% block content %}
+
+            <script>
+                            //inspect disable/ right click on browser
+                            document.addEventListener('contextmenu', event => event.preventDefault());
+
+                            function checkFname()
+                            {
+                                alert("called");
+                                var fname=document.getElementById("firstname").value;
+                                var alphaExp = /^[a-zA-Z]+$/;
+                                if (fname.length<3)
+                                {           
+                
+                                    document.getElementById("firstname").value = "firstname must be between 4 characters to 15 characters";
+                                    document.getElementById("firstname").style.color = "red";
+                                    // document.getElementById("firstname").innerHTML="firstname must be between 4 characters to 15 characters";
+                                    document.getElementById("error").innerHTML="firstname must be between 4 characters to 15 characters";
+                                    return false;
+                                }
+                                else if(!fname.match(alphaExp))
+                                {
+                                    document.getElementById("error").innerHTML="Firstname must contain characters";
+                                    return false;
+                                }
+                                else
+                                {
+                                    document.getElementById("error").innerHTML=""; 
+                                    return false;
+                                }
+                            }
+                        
+                        </script> 
+
+          <section class="content home">
+            <div class="block-header">
+                <div class="row">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
+                        <h2>Chairman Profile <small class="text-muted">Welcome to Digital Society</small></h2>
+                    </div>            
+                    <div class="col-lg-7 col-md-7 col-sm-12 text-right">
+                        <ul class="breadcrumb float-md-right">
+                            <li class="breadcrumb-item"><a href="{% url 'index' %}"><i class="zmdi zmdi-home"></i>Home</a></li>
+                            <li class="breadcrumb-item">Profile</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">                
+                
+    <div class="row clearfix profile-page">
+        <div class="col-lg-4 col-md-12">
+            <div class="card profile-header">
+                <div class="body text-center">
+                    <br><br><br>
+                    <div class="profile-image"> <img src="{{context.cid.profile_pic.url}}" alt=""> </div>
+                    <br><br><br>
+                    <div>
+                        <h4 class="m-b-0"><strong>{{context.cid.fname}} {{context.cid.lname}}</strong></h4>
+                        <span class="job_post">Block Number: {{context.cid.m_id.homeno}}</span>
+                        <span class="job_post">Contact No.:{{context.cid.m_id.contact_no}}</span>
+                        <span class="job_post">email: {{context.cid.user_id.email}}</span>
+                    </div>
+                    <br><br><br>
+                </div>                    
+            </div>                               
+               
+        </div>
+        <div class="col-lg-8 col-md-12">
+            <div class="card">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#about">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Account">Update Profile</a></li>                        
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane body active" id="about">
+                        <hr>
+                        <ul class="list-unstyled">
+                            <li>
+                                <p><strong>Name:</strong> {{context.cid.fname}} {{context.cid.lname}}</p>
+                            </li>
+                            <li>
+                                <p><strong>Block Number: </strong>{{context.cid.m_id.homeno}}</p>
+                            </li>
+                            <li>
+                                <p><strong>Contact No:</strong> {{context.cid.m_id.contact_no}}</p>
+                            </li>
+                            <li>
+                                <p><strong>Email ID:</strong> {{context.cid.user_id.email}}</p>
+                            </li>
+                            <li>
+                                <p><strong>Address:</strong> {{context.cid.m_id.address}}</p>
+                            </li>
+                            <li>
+                                <p><strong>Job Profession:</strong> {{context.cid.m_id.job_profession}}</p>
+                            </li>
+                            <li>
+                                <p><strong>Job Address:</strong> {{context.cid.m_id.job_address}}</p>
+                            </li>
+                            <li>
+                                <p><strong>Vehicle-Type:</strong> {{context.cid.m_id.vehicle_type}}</p>
+                            </li>
+                            <li>
+                                <p><strong>Vehicle-Number:</strong> {{context.cid.m_id.vehicle_no}}</p>
+                            </li>
+                            <li>
+                                <p><strong>Blood-Group:</strong> {{context.cid.m_id.blood_group}}</p>
+                            </li>
+                            <li>
+                                <p><strong>Number of Family-Members:</strong> {{context.cid.m_id.family_member_details}}</p>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="tab-pane body" id="Account">
+                        <form action="{% url 'profile-update' %}" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                    <input type="text" class="form-control" name="c_fname" id="firstname" placeholder="First Name" value="{{context.cid.fname}}" onblur="checkFname()">
+                                    <small><p style="color: #ff0000;"><span id="error"></span></p></small>
+                                </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" name='c_lname' value="{{context.cid.lname}}">
+                            
+                            <div class="form-group">
+                                <input type="email" class="form-control" value={{context.cid.user_id.email}} name='email' readonly>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name='c_currentPassword' value={{context.cid.user_id.password}}>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" name='c_newpassword' placeholder="New Password">
+                            </div>
+                            
+                            <hr>
+                            <div class="row clearfix">
+                                <div class="col-lg-2 col-md-12">
+                                    <div class="form-group">
+                                        <input type="text"placeholder="Home no" name='c_homeno' class="form-control" value="{{context.cid.m_id.homeno}}" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-10 col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Address" name='c_address' value='{{context.cid.m_id.address}}' >
+                                    </div>
+                                </div> 
+                                <div class="col-lg-5 col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Contact Number" name='c_contact_no' value={{context.cid.m_id.contact_no}}>
+                                    </div>
+                                </div>
+                                <div class="col-lg-7 col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Family Member Detail" name='c_family_member' value='{{context.cid.m_id.family_member_details}}'>
+                                    </div>
+                                </div>                                   
+                                <div class="col-lg-5 col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Job Profession" name='c_jobProfession' value={{context.cid.m_id.job_profession}}>
+                                    </div>
+                                </div>
+    
+                                <div class="col-lg-7 col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Job Address" name='c_job_address' value= {{context.cid.m_id.job_address}}>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Vehicle-Type" name='c_vehicle_type' value={{context.cid.m_id.vehicle_type}}>
+                                    </div>
+                                </div>
+                                <div class="col-lg-7 col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Vehicle-Number" name='c_vehicle_no' value={{context.cid.m_id.vehicle_no}}>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Blood-Group" name='c_blood_group' value={{context.cid.m_id.blood_group}}>
+                                    </div>
+                                </div>
+                                <div class="col-lg-7 col-md-12">
+                                    <div class="form-group">
+                                        <input type="file" class="form-control" placeholder="Profile Picture" name='c_profilePic'>
+                                    </div>
+                                </div>
+                            <div class="col-md-12">
+                                <input type="submit" class="btn btn-primary btn-round" value="Save Changes">
+                            </div>
+                        </form>
+                        </div>
+                    </div>                        
+                </div>
+            </div>
+                           
+        </div>
+    </div>
+
+            </div>
+        </section>
+        {% endblock %}
+                <!-- Scripts -->
+                <script src="{%  static 'chairman\assets\bundles\libscripts.bundle.js' %}"></script>    
+        <script src="{%  static 'chairman\assets\bundles\vendorscripts.bundle.js' %}"></script>
+
+        <script src="{%  static 'chairman\assets\bundles\mainscripts.bundle.js' %}"></script>
+                                <script src="{%  static 'chairman\assets\bundles\knob.bundle.js' %}"></script>
+    <script src="{%  static 'chairman\assets\js\pages\charts\jquery-knob.js' %}"></script>
+				<!--Start of Tawk.to Script-->
+        <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        s1.src='https://embed.tawk.to/59f5afbbbb0c3f433d4c5c4c/default';
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+        })();
+        </script>
+        <!--End of Tawk.to Script-->
+    </body>
+</html>

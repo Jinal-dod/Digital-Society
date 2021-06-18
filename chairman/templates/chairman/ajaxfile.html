@@ -1,0 +1,77 @@
+<script>
+
+ 
+
+
+    
+    $(document).ready(function(){
+        $("#myemail").on("change",function(){
+        console.log("edittext change");         
+        let email=$("#myemail").val();
+        let role = $("#idrole").val();
+        console.log("====================  myemaiil",email);
+        let csr=$("input[name='csrfmiddlewaretoken']").val();
+
+        userData={
+            role : role,
+            email:email,
+            csrfmiddlewaretoken:csr,
+        }
+                $.ajax(
+                    {
+                        url : "{% url 'check-email' %}",
+                        method : "POST",
+                        data : userData,
+                        success:function(response)
+                        {
+                            console.log("=====================  Success msg : ",response);
+                            console.log("=====================  Success msg : ",response.context.msg);
+                            msgvalue = response.context.msg
+                            $("#msgid").html(msgvalue);
+                            
+        
+                        }
+                    }
+                )   
+        })
+    });
+
+
+
+
+
+
+    //Member Delete
+ $(":button").on("click",function () {
+        console.log('---------------------------btn clicked')
+        let id=$(this).attr('data-member');
+        console.log(id);
+        let csr=$("input[name='csrfmiddlewaretoken']").val();
+        uesrdata={
+                id:id,
+                csrfmiddlewaretoken:csr,
+                }
+                  console.log("------------------------------------------")
+        $.ajax(
+        {
+            url:"{% url 'delete-member' %}",
+            method:'POST',
+            data:uesrdata,
+            success:function(response)
+            {
+                console.log("=====================  Success msg : ",response);
+                url = "{% url 'view-member' %}"
+                  console.log("=====================  Success msg : ",response);
+              
+                window.location.assign(url); 
+            }
+        }
+        ) 
+
+    });
+
+
+
+
+</script> 
+
